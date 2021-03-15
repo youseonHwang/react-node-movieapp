@@ -8,7 +8,7 @@ function LandingPage() {
 
   const [Movies, setMovies] = useState([])
   const [MainMovieImage, setMainMovieImage] = useState(null)
-  const [CurrentPage, setCurrentPage] = useState(0)
+  const [CurrentPage, setCurrentPage] = useState(0) // 처음에 0인데 loadMoreItems에서 +1동작함
 
   // 랜딩시마다 동작
   useEffect(() => {
@@ -22,7 +22,7 @@ function LandingPage() {
       .then(response => response.json())
       .then(response => {
         console.log(response)
-        setMovies([...Movies, ...response.results])
+        setMovies([...Movies, ...response.results]) //처음꺼를 사라지게 하는 것이 아니라 원래 있던 movies에 추가
         setMainMovieImage(response.results[0])
         setCurrentPage(response.page)
       })
@@ -58,6 +58,7 @@ function LandingPage() {
             return (
               <React.Fragment key={index}>
                 <GridCards any
+                  landingPage
                   image={movie.poster_path ?
                     `${IMAGE_BASE_URL}w500${movie.poster_path}` : null}
                   movieId={movie.id}
