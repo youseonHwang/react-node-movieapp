@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom"; //리액트 라우터 (웹개발용)
 import Auth from "../hoc/auth";
+
 // pages for this product
 import LandingPage from "./views/LandingPage/LandingPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
@@ -14,6 +15,7 @@ import Footer from "./views/Footer/Footer"
 
 function App() {
   return (
+    //suspense 컴포넌트를 이용해서 로딩을 기다리기
     <Suspense fallback={(<div>Loading...</div>)}>
       <NavBar />
       <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
