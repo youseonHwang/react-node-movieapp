@@ -71,7 +71,8 @@ function RegisterPage(props) {
             lastname: values.lastname,
             image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
           };
-
+          
+          //registerUser 액션을 디스패치함
           dispatch(registerUser(dataToSubmit)).then(response => {
             if (response.payload.success) {
               props.history.push("/login");

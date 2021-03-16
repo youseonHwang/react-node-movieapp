@@ -10,19 +10,21 @@ const { Title } = Typography;
 
 function LoginPage(props) {
   const dispatch = useDispatch();
-  const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
+  const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false; //로컬스토리지에서 'rememberMe' 가져옴 
 
   const [formErrorMessage, setFormErrorMessage] = useState('')
   const [rememberMe, setRememberMe] = useState(rememberMeChecked)
 
+  /* 아이디 기억 */
   const handleRememberMe = () => {
     setRememberMe(!rememberMe)
   };
-
   const initialEmail = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
 
   return (
+    /* onSubmit과 initialValues는 Formik태그 안에 꼭 들어가야 하는 props들  */
     <Formik
+      // 초기 필드값
       initialValues={{
         email: initialEmail,
         password: '',
@@ -35,16 +37,19 @@ function LoginPage(props) {
           .min(6, 'Password must be at least 6 characters')
           .required('Password is required'),
       })}
+
+      // 폼 제출시 실행될 함수(values에는 initialValues와 동일한 구조를 가진 값)
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           let dataToSubmit = {
             email: values.email,
             password: values.password
           };
-
+          
+          //user_actions로 감
           dispatch(loginUser(dataToSubmit))
-            .then(response => {
-              if (response.payload.loginSuccess) {
+            .then(response => { // type: LOGIN_USER, payload: request
+              if (response.payload.loginSuccess) { // payload 는 body 에 담기는 data
                 window.localStorage.setItem('userId', response.payload.userId);
                 if (rememberMe === true) {
                   window.localStorage.setItem('rememberMe', values.id);
@@ -78,6 +83,8 @@ function LoginPage(props) {
           handleSubmit,
           handleReset,
         } = props;
+
+        
         return (
           <div className="app">
 
@@ -124,12 +131,14 @@ function LoginPage(props) {
                 <label ><p style={{ color: '#ff0000bf', fontSize: '0.7rem', border: '1px solid', padding: '1rem', borderRadius: '10px' }}>{formErrorMessage}</p></label>
               )}
 
+              {/* 버튼 */}
               <Form.Item>
                 <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe} >Remember me</Checkbox>
                 <a className="login-form-forgot" href="/reset_user" style={{ float: 'right' }}>
                   forgot password
                   </a>
                 <div>
+                  {/*양식을 두번 보내지 않도록 isSubmitting을 disable시킴 */}
                   <Button type="primary" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }} disabled={isSubmitting} onSubmit={handleSubmit}>
                     Log in
                 </Button>

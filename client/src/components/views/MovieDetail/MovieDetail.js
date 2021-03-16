@@ -4,7 +4,8 @@ import { Row } from 'antd';
 
 import MainImage from '../LandingPage/Sections/MainImage'
 import MovieInfo from './Sections/MovieInfo'
-import GridCards from '../Commons/GridCard';
+import GridCards from '../Commons/GridCard'
+import Favorite from './Sections/Favorite'
 
 function MovieDetail(props) {
 
@@ -50,6 +51,10 @@ function MovieDetail(props) {
       />
       {/* 바디 */}
       <div style={{ width: '85%', margin: '1rem auto' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          {/*로그인이 성공되면 userId를 로컬스토리지에 넣었음 */}
+          <Favorite movieInfo={Movie} movieId={movieId} userFrom={localStorage.getItem('userId')}/>
+        </div>
         {/* 영화 정보 */}
         <MovieInfo
           movie={Movie}
@@ -61,20 +66,20 @@ function MovieDetail(props) {
         </div>
 
         {ActorToggle &&
-        <Row gutter={[16, 16]}>
-          {Casts && Casts.map((cast, index) => {
-            return (
-              <React.Fragment key={index}>
-                <GridCards any
-                  image={cast.profile_path ?
-                    `${IMAGE_BASE_URL}w500${cast.profile_path}` : null}
-                  characterName={cast.name}
-                />
-              </React.Fragment>
-            )
-          })}
-        </Row>
-      }
+          <Row gutter={[16, 16]}>
+            {Casts && Casts.map((cast, index) => {
+              return (
+                <React.Fragment key={index}>
+                  <GridCards any
+                    image={cast.profile_path ?
+                      `${IMAGE_BASE_URL}w500${cast.profile_path}` : null}
+                    characterName={cast.name}
+                  />
+                </React.Fragment>
+              )
+            })}
+          </Row>
+        }
       </div>
     </div>
   )

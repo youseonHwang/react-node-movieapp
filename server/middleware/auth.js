@@ -1,5 +1,6 @@
 const { User } = require('../models/User');
 
+/* 토큰 검증 함수 미들웨어 */
 let auth = (req, res, next) => {
   let token = req.cookies.w_auth;
 
