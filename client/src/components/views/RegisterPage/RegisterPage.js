@@ -41,7 +41,7 @@ function RegisterPage(props) {
     <Formik
       initialValues={{
         email: '',
-        lastName: '',
+        lastname: '',
         name: '',
         password: '',
         confirmPassword: ''

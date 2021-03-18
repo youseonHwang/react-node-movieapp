@@ -35,7 +35,7 @@ function MovieDetail(props) {
         console.log('response?::', response)
         setCasts(response.cast)
       })
-  }, [])
+  }, []) // []데이터 흐름에 관여하는 어떠한 값도 사용하지 않겠다
 
   const toggleActorView = () => {
     setActorToggle(!ActorToggle)
@@ -55,6 +55,7 @@ function MovieDetail(props) {
           {/*로그인이 성공되면 userId를 로컬스토리지에 넣었음 */}
           <Favorite movieInfo={Movie} movieId={movieId} userFrom={localStorage.getItem('userId')}/>
         </div>
+        
         {/* 영화 정보 */}
         <MovieInfo
           movie={Movie}

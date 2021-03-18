@@ -36,8 +36,52 @@ router.post('/favorited', (req, res) => {
       }
       res.status(200).json({ success: true, favorited: result })
     })
+})
 
+/* 좋아요 삭제 */
+router.post('/removeFromFavorite', (req, res) => {
+  console.log('removeFromFavorite 도착')
+  console.log(req.body.movieId, req.body.userFrom)
+  Favorite.findOneAndDelete({ movieId: req.body.movieId, userFrom: req.body.userFrom })
 
+    .exec((err, doc) => {
+      if (err) return res.status(400).send(err)
+      res.status(200).json({ success: true, doc })
+    })
+})
+
+/* 좋아요 추가 */
+router.post('/addToFavorite', (req, res) => {
+  console.log('addToFavorite 도착')
+
+  //리퀘스트 바디에서 모든 정보를 가져와서 new Favorite을 통해 favorite변수에 객체 생성
+  const favorite = new Favorite(req.body)
+
+  //save메소드를 통해 저장
+  favorite.save((err, doc) => {
+    if (err) return res.status(400).send(err)
+    return res.status(200).json({ success: true })
+  })
+})
+
+/* 자신이 좋아요 한 리스트 */
+router.post('/getFavoriteMovie', (req, res) => {
+  console.log('getFavoriteMovie 도착')
+  console.log('userFrom:::', req.body.userFrom )
+  Favorite.find({ 'userFrom': req.body.userFrom })
+    .exec((err, favorites) => {
+      if (err) return res.status(400).send(err)
+      return res.status(200).json({ success: true, favorites })
+    })
+})
+
+/* 내 좋아요 리스트에서만 좋아요 삭제 */
+router.post('/removeFromMyFavorite', (req, res) => {
+  Favorite.findByIdAndDelete({movieId: req.body.movieId, userFrom:req.body.userFrom})
+    .exec((err, result) => {
+      if (err) return res.status(400).send(err)
+      return res.status(200).json({ success: true, result})
+  })
 })
 
 
