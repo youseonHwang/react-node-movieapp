@@ -7,6 +7,7 @@ import MovieInfo from './Sections/MovieInfo'
 import GridCards from '../Commons/GridCard'
 import Favorite from './Sections/Favorite'
 import Comment from './Sections/Comment'
+import Axios from 'axios';
 
 function MovieDetail(props) {
 
@@ -14,11 +15,25 @@ function MovieDetail(props) {
   const [Movie, setMovie] = useState([])
   const [Casts, setCasts] = useState([])
   const [ActorToggle, setActorToggle] = useState(false)
+  const [Comments, setComments] = useState([])
+
+  const variables = { movieId }
 
   useEffect(() => {
     let endpointCrew = `${API_URL}movie/${movieId}/credits?api_key=${API_KEY}`
     let endpointInfo = `${API_URL}movie/${movieId}?api_key=${API_KEY}`
     console.log('props.match?::', props.match)
+
+    Axios.post('/api/comment/getComments', variables)
+      .then(response => {
+
+        if (response.data.success) {
+          console.log('getComments::', response.data.comments);
+          setComments(response.data.comments)
+        } else {
+          alert('댓글 로드 실패하였습니다')
+        }
+      })
 
     // 랜딩 후 할 동작
     fetch(endpointInfo)
@@ -35,6 +50,8 @@ function MovieDetail(props) {
         console.log('response?::', response)
         setCasts(response.cast)
       })
+
+    
   }, []) // []데이터 흐름에 관여하는 어떠한 값도 사용하지 않겠다
 
   const toggleActorView = () => {
@@ -60,7 +77,7 @@ function MovieDetail(props) {
         <MovieInfo movie={Movie} />
         <br />
 
-        <Comment movieId={movieId}/>
+        <Comment CommentList={Comments} movieId={movieId} />
 
         <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem' }}>
           <button onClick={toggleActorView}> Toggle Actor View</button>
