@@ -25,6 +25,7 @@ app.use(cookieParser());
 
 app.use('/api/users', require('./routes/users')); //user api미들웨어 등록
 app.use('/api/favorite', require('./routes/favorite')); //favorite api미들웨어 등록
+app.use('/api/comment', require('./routes/comment'));
 
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
 app.use('/uploads', express.static('uploads'));

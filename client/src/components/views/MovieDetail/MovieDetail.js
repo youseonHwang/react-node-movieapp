@@ -6,6 +6,7 @@ import MainImage from '../LandingPage/Sections/MainImage'
 import MovieInfo from './Sections/MovieInfo'
 import GridCards from '../Commons/GridCard'
 import Favorite from './Sections/Favorite'
+import Comment from './Sections/Comment'
 
 function MovieDetail(props) {
 
@@ -24,7 +25,6 @@ function MovieDetail(props) {
       .then(response => response.json())
       .then(response => {
         console.log('response?::', response)
-
         setMovie(response)
       })
 
@@ -53,14 +53,14 @@ function MovieDetail(props) {
       <div style={{ width: '85%', margin: '1rem auto' }}>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           {/*로그인이 성공되면 userId를 로컬스토리지에 넣었음 */}
-          <Favorite movieInfo={Movie} movieId={movieId} userFrom={localStorage.getItem('userId')}/>
+          <Favorite movieInfo={Movie} movieId={movieId} userFrom={localStorage.getItem('userId')} />
         </div>
-        
+
         {/* 영화 정보 */}
-        <MovieInfo
-          movie={Movie}
-        />
+        <MovieInfo movie={Movie} />
         <br />
+
+        <Comment movieId={movieId}/>
 
         <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem' }}>
           <button onClick={toggleActorView}> Toggle Actor View</button>
@@ -81,6 +81,7 @@ function MovieDetail(props) {
             })}
           </Row>
         }
+
       </div>
     </div>
   )

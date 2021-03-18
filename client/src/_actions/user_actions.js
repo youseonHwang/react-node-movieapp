@@ -5,6 +5,7 @@ import {
   AUTH_USER,
   LOGOUT_USER,
 } from './types';
+
 import { USER_SERVER } from '../components/Config.js'; // '/api/users'
 
 /* 회원가입 요청 */
@@ -30,8 +31,8 @@ export function loginUser(dataToSubmit) {
 
 /* 권한 확인 요청 */
 export function auth() {
-  const request = axios.get(`${USER_SERVER}/auth`)
-    .then(response => response.data);
+  const request =
+    axios.get(`${USER_SERVER}/auth`).then(response => response.data);
 
   return {
     type: AUTH_USER,

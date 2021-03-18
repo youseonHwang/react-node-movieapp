@@ -28,10 +28,14 @@ function FavoritePage() {
 
   /* delete버튼 클릭시 삭제 메소드 */
   const onClickDelete = (movieId, userFrom) => {
+
+    console.log('onClickDelete 눌렀음')
     const variables = {
       movieId,
       userFrom
     }
+    console.log('variables', variables.movieId);
+
     Axios.post('/api/favorite/removeFromMyFavorite', variables)
       .then(response => {
         if (response.data.success) {
@@ -62,7 +66,7 @@ function FavoritePage() {
           <td>{favorite.movieTitle}</td>
         </Popover>
         <td>{favorite.movieRunTime} mins</td>
-        <td><Button onClick={() => onClickDelete(favorite.movieId, favorite.userFrom)}>Remove</Button></td>
+        <td><Button onClick={() => { onClickDelete(favorite.movieId, favorite.userFrom) }}>Remove</Button></td>
       </tr>
     )
   })
@@ -80,7 +84,7 @@ function FavoritePage() {
           </tr>
         </thead>
         <tbody>
-          {renderCards} 
+          {renderCards}
         </tbody>
       </table>
     </div>

@@ -67,7 +67,7 @@ router.post('/addToFavorite', (req, res) => {
 /* 자신이 좋아요 한 리스트 */
 router.post('/getFavoriteMovie', (req, res) => {
   console.log('getFavoriteMovie 도착')
-  console.log('userFrom:::', req.body.userFrom )
+  console.log('userFrom:::', req.body.userFrom)
   Favorite.find({ 'userFrom': req.body.userFrom })
     .exec((err, favorites) => {
       if (err) return res.status(400).send(err)
@@ -77,11 +77,13 @@ router.post('/getFavoriteMovie', (req, res) => {
 
 /* 내 좋아요 리스트에서만 좋아요 삭제 */
 router.post('/removeFromMyFavorite', (req, res) => {
-  Favorite.findByIdAndDelete({movieId: req.body.movieId, userFrom:req.body.userFrom})
+  console.log('removeFromMyFavorite도착');
+  console.log(req.body)
+  Favorite.findOneAndDelete({ movieId: req.body.movieId, userFrom: req.body.userFrom })
     .exec((err, result) => {
       if (err) return res.status(400).send(err)
-      return res.status(200).json({ success: true, result})
-  })
+      return res.status(200).json({ success: true, result })
+    })
 })
 
 

@@ -8,7 +8,8 @@ const { auth } = require("../middleware/auth");
 //             User
 //=================================
 
-router.get("/auth", auth, (req, res) => {
+/* 클라이언트단에서 권한체크를 위해 통신 요청하면 여기로 옴 */
+router.get("/auth", auth, (req, res) => { // auth미들웨어를 거쳐서 옴
   res.status(200).json({
     _id: req.user._id,
     isAdmin: req.user.role === 0 ? false : true,
