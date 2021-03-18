@@ -7,12 +7,11 @@ const { TextArea } = Input;
 
 function SingleComment(props) {
 
-  console.log('singleComment의 props:::', props);
   const name = props.comment.writer.name
   const user = useSelector(state => state.user); //state에서 user를 가져와서 user변수에 넣음
   const [OpenReply, setOpenReply] = useState(false)
   const [CommentValue, setCommentValue] = useState("")
-  
+
 
   // reply오픈
   const onClickReplyOpen = () => {
@@ -21,7 +20,7 @@ function SingleComment(props) {
 
   // 타이핑을 위한 event객체
   const onHandlerChange = (e) => {
-    setCommentValue(e.currentTarget.CommentValue)
+    setCommentValue(e.currentTarget.value)
   }
 
   //대댓글
@@ -34,12 +33,17 @@ function SingleComment(props) {
       movieId: props.movieId,
       responseTo: props.comment._id
     }
+    console.log('singleComment의 variables::::', variables)
 
     // 댓글 저장
     Axios.post('/api/comment/saveComment', variables)
       .then(response => {
         if (response.data.success) {
           console.log(response.data.result);
+          setCommentValue("")
+          setOpenReply(false)
+          props.refreshFunction(response.data.result)
+
         } else {
           alert('댓글 저장 실패하였습니다')
         }

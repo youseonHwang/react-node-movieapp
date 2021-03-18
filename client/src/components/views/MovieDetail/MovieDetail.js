@@ -51,8 +51,12 @@ function MovieDetail(props) {
         setCasts(response.cast)
       })
 
-    
+
   }, []) // []데이터 흐름에 관여하는 어떠한 값도 사용하지 않겠다
+
+  const refreshFunction = (newComment) => {
+    setComments(Comments.concat(newComment))
+  }
 
   const toggleActorView = () => {
     setActorToggle(!ActorToggle)
@@ -77,7 +81,7 @@ function MovieDetail(props) {
         <MovieInfo movie={Movie} />
         <br />
 
-        <Comment CommentList={Comments} movieId={movieId} />
+        <Comment refreshFunction={refreshFunction} CommentList={Comments} movieId={movieId} />
 
         <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem' }}>
           <button onClick={toggleActorView}> Toggle Actor View</button>

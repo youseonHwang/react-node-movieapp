@@ -2,6 +2,7 @@ import Axios from 'axios'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import SingleComment from './SingleComment'
+import ReplyComment from './ReplyComment'
 
 
 function Comment(props) {
@@ -33,6 +34,8 @@ function Comment(props) {
       .then(response => {
         if (response.data.success) {
           console.log(response.data)
+
+          props.refreshFunction(response.data.result)
         } else {
           alert('댓글 저장 실패하였습니다')
         }
@@ -48,7 +51,10 @@ function Comment(props) {
       {/*코멘트 목록 */}
       {props.CommentList && props.CommentList.map((comment, index) => (
         (!comment.responseTo && comment.writer &&
-          <SingleComment comment={comment} movieId={movieId} />
+          <React.Fragment>
+            <SingleComment refreshFunction={props.refreshFunction} comment={comment} movieId={movieId} />
+            <ReplyComment refreshFunction={props.refreshFunction} CommentList={props.CommentList} parentCommentId={comment._id} movieId={movieId} />
+          </React.Fragment>
         )
       ))}
 
