@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import SingleComment from './SingleComment'
+import {Button} from 'antd'
 
 function ReplyComment(props) {
 
@@ -38,8 +39,8 @@ function ReplyComment(props) {
   return (
     <div>
       {ChildCommentNumber > 0 &&
-        <p style={{ fontSize: '14px', margin: '0', color: 'grey' }} onClick={onHandleChange}
-        >View {ChildCommentNumber} more Comment(s)</p>
+        <Button type="dashed" style={{ fontSize: '14px', margin: '0', color: 'grey' }} onClick={onHandleChange}
+        >View {ChildCommentNumber} more Comment(s)</Button>
       }
 
       {OpenReply &&

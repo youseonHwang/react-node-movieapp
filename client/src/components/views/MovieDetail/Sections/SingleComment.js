@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { openNotify } from '../../../../_actions/notification_action'
 import { Comment, Avatar, Button, Input } from 'antd'
 import Axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 const { TextArea } = Input;
 
 function SingleComment(props) {
+
+  const dispatch = useDispatch();
 
   const name = props.comment.writer.name
   const user = useSelector(state => state.user); //state에서 user를 가져와서 user변수에 넣음
@@ -43,15 +46,25 @@ function SingleComment(props) {
           setCommentValue("")
           setOpenReply(false)
           props.refreshFunction(response.data.result)
-
+          dispatch(openNotify({
+            openNotify: true,
+            type: 'success',
+            msg: '댓글 저장에 성공하였습니다.'
+          }))
+          dispatch(openNotify({ openNotify: false }))
         } else {
-          alert('댓글 저장 실패하였습니다')
+          dispatch(openNotify({
+            openNotify: true,
+            type: 'error',
+            msg: '댓글 저장에 실패하였습니다.'
+          }))
+          dispatch(openNotify({ openNotify: false }))
         }
       })
 
   }
   const actions = [
-    <span onClick={onClickReplyOpen} key="comment-basic-reply-to">Reply to</span>
+    <Button onClick={onClickReplyOpen} key="comment-basic-reply-to" type="link">대댓글 달기</Button>
   ]
   return (
     <div>
@@ -62,13 +75,13 @@ function SingleComment(props) {
         content={<p>{props.comment.content}</p>} />
 
       {OpenReply &&
-        <form style={{ display: 'flex' }} onSubmit={onSubmit}>
-          <textarea style={{ width: '100%', borderRadius: '5px' }}
+        <form style={{ display: 'flex'}} onSubmit={onSubmit}>
+          <textarea style={{ width: '50%', borderRadius: '5px', marginRight: '20px' }}
             onChange={onHandlerChange}
             value={CommentValue}
             placeholder="댓글을 달아주세요" />
           <br />
-          <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
+          <Button type="primary" style={{ width: '10%', height: '52px' }} onClick={onSubmit}>Submit</Button>
         </form>
       }
     </div>

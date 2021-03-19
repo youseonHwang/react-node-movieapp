@@ -5,18 +5,15 @@ import GridCards from '../Commons/GridCard';
 import { Row } from 'antd';
 
 function LandingPage() {
-
+  const [Endpoint, setEndpoint] = useState(`${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`)
   const [Movies, setMovies] = useState([])
   const [MainMovieImage, setMainMovieImage] = useState(null)
   const [CurrentPage, setCurrentPage] = useState(0) // 처음에 0인데 loadMoreItems에서 +1동작함
 
-  // 랜딩시마다 동작
+  // EndPoint state값이 변경됐을때만 useEffect가 실행됨
   useEffect(() => {
-    const endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
-    fetchMovies(endpoint)
-
-    
-  }, [])
+    fetchMovies(Endpoint)
+  }, [Endpoint])
 
   // 영화 내용 가져오는 함수
   const fetchMovies = (endpoint) => {
@@ -32,10 +29,8 @@ function LandingPage() {
 
   //more 버튼 클릭시 동작
   const loadMoreItems = () => {
-    const endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${CurrentPage + 1}`;
-    fetchMovies(endpoint)
+    setEndpoint(`${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${CurrentPage + 1}`) 
   }
-
 
   return (
     <div style={{ width: '100%', margin: '0' }}>

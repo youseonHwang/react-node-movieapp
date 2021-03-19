@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { API_URL, API_KEY, IMAGE_BASE_URL } from '../../Config'
-import { Row } from 'antd';
+import { Row, Tooltip, Button } from 'antd';
 
 import MainImage from '../LandingPage/Sections/MainImage'
 import MovieInfo from './Sections/MovieInfo'
@@ -83,7 +83,9 @@ function MovieDetail(props) {
         <Comment refreshFunction={refreshFunction} CommentList={Comments} movieId={movieId} />
 
         <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem' }}>
-          <button onClick={toggleActorView}> Toggle Actor View</button>
+          <Tooltip placement="bottom" title="배우 목록" arrowPointAtCenter>
+            <Button type="primary" shape="round" size="large" onClick={toggleActorView}> Toggle Actor View</Button>
+          </Tooltip>
         </div>
 
         {ActorToggle &&
@@ -92,8 +94,8 @@ function MovieDetail(props) {
               return (
                 <React.Fragment key={index}>
                   <GridCards any
-                    image={cast.profile_path ?
-                      `${IMAGE_BASE_URL}w500${cast.profile_path}` : null}
+                    image={cast.profile_path!==null ?
+                      `${IMAGE_BASE_URL}w500${cast.profile_path}` : ''}
                     characterName={cast.name}
                   />
                 </React.Fragment>

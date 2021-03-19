@@ -71,7 +71,6 @@ function RegisterPage(props) {
             lastname: values.lastname,
             image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
           };
-          
 
           console.log('dataToSubmit:::', dataToSubmit)
           //registerUser 액션을 디스패치함
