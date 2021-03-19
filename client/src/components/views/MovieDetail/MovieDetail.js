@@ -12,21 +12,21 @@ import Axios from 'axios';
 function MovieDetail(props) {
 
   let movieId = props.match.params.movieId//route에서 가져옴
+  const variables = { movieId }
+
   const [Movie, setMovie] = useState([])
   const [Casts, setCasts] = useState([])
   const [ActorToggle, setActorToggle] = useState(false)
   const [Comments, setComments] = useState([])
-
-  const variables = { movieId }
-
+  
   useEffect(() => {
     let endpointCrew = `${API_URL}movie/${movieId}/credits?api_key=${API_KEY}`
     let endpointInfo = `${API_URL}movie/${movieId}?api_key=${API_KEY}`
     console.log('props.match?::', props.match)
 
+    /* 댓글 리스트 가져오기 */
     Axios.post('/api/comment/getComments', variables)
       .then(response => {
-
         if (response.data.success) {
           console.log('getComments::', response.data.comments);
           setComments(response.data.comments)
@@ -50,12 +50,10 @@ function MovieDetail(props) {
         console.log('response?::', response)
         setCasts(response.cast)
       })
-
-
-  }, []) // []데이터 흐름에 관여하는 어떠한 값도 사용하지 않겠다
+  }, []) // []데이터 흐름에 관여하는 어떠한 값도 사용하지 않겠다(최초 한번만 동작)
 
   const refreshFunction = (newComment) => {
-    setComments(Comments.concat(newComment))
+    setComments(Comments.concat(newComment)) // concat기존 배열에 원소 또는 배열을 추가하여 새 배열
   }
 
   const toggleActorView = () => {
@@ -80,7 +78,8 @@ function MovieDetail(props) {
         {/* 영화 정보 */}
         <MovieInfo movie={Movie} />
         <br />
-
+        
+        {/* 댓글 목록 */}
         <Comment refreshFunction={refreshFunction} CommentList={Comments} movieId={movieId} />
 
         <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem' }}>

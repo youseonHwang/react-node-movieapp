@@ -1,16 +1,21 @@
 import Axios from 'axios'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import {Button} from 'antd'
+
 import SingleComment from './SingleComment'
 import ReplyComment from './ReplyComment'
 
-
+/*
+  MovieDetail -> Comment
+  (props)
+  1. refreshFunction
+  2. CommentList
+  3. movieId
+*/
 function Comment(props) {
 
-  console.log('Comment.js의 props:::', props);
-
   const user = useSelector(state => state.user); //state에서 user를 가져와서 user변수에 넣음
-
   let movieId = props.movieId
 
   const [CommentValue, setCommentValue] = useState("")
@@ -19,7 +24,7 @@ function Comment(props) {
   const handleClick = (e) => {
     setCommentValue(e.currentTarget.value)
   }
-
+  // 댓글 폼 submit 함수
   const onSubmit = (e) => {
     e.preventDefault() //새로고침 안하도록
 
@@ -33,8 +38,6 @@ function Comment(props) {
     Axios.post('/api/comment/saveComment', variables)
       .then(response => {
         if (response.data.success) {
-          console.log(response.data)
-
           props.refreshFunction(response.data.result)
         } else {
           alert('댓글 저장 실패하였습니다')
@@ -65,7 +68,7 @@ function Comment(props) {
           value={CommentValue}
           placeholder="댓글을 달아주세요" />
         <br />
-        <button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</button>
+        <Button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</Button>
       </form>
 
     </div>

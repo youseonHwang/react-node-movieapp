@@ -14,6 +14,8 @@ function LandingPage() {
   useEffect(() => {
     const endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
     fetchMovies(endpoint)
+
+    
   }, [])
 
   // 영화 내용 가져오는 함수
