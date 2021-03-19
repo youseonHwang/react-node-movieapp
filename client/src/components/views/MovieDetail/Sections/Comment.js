@@ -1,7 +1,8 @@
 import Axios from 'axios'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import {Button} from 'antd'
+import { useSelector, useDispatch } from 'react-redux'
+import { openNotify } from "../../../../_actions/notification_action";
+import { Button } from 'antd'
 
 import SingleComment from './SingleComment'
 import ReplyComment from './ReplyComment'
@@ -14,7 +15,7 @@ import ReplyComment from './ReplyComment'
   3. movieId
 */
 function Comment(props) {
-
+  const dispatch = useDispatch();
   const user = useSelector(state => state.user); //state에서 user를 가져와서 user변수에 넣음
   let movieId = props.movieId
 
@@ -39,6 +40,14 @@ function Comment(props) {
       .then(response => {
         if (response.data.success) {
           props.refreshFunction(response.data.result)
+          console.log('saveComment성공::', response.data);
+          //const notificationInfo = 
+          dispatch(openNotify({
+            openNotify: true,
+            type: 'success',
+            msg: '댓글 저장에 성공하였습니다.'
+          }))
+
         } else {
           alert('댓글 저장 실패하였습니다')
         }

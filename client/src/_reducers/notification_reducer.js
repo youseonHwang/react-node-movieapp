@@ -3,10 +3,11 @@ import {
 } from '../_actions/types';
 
 const initNotify = {
-  openNotify: false,
-  type: 'info',
-  message: '',
-  description: '',
+  notificationInfo: {
+    openNotify: false,
+    type: 'info',
+    msg: '',
+    description: '',}
 }
 
 export default function (state = initNotify , action) {

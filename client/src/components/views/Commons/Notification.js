@@ -1,38 +1,50 @@
 import React, { useEffect } from 'react'
 import { message } from 'antd';
 import { useSelector } from 'react-redux';
+import './Notification.css'
 
 /* Notification 컴포넌트 */
 function Notification() {
+  console.log('Notification 랜더링 됐습니다.')
+  const notificationInfo = useSelector(state => (
+    state.notify.notificationInfo
+  ))
 
-  const { openNotify, type, msg, description } = useSelector(state => ({
-    openNotify: state.notify.openNotify,
-    type: state.notify.type,
-    msg: state.notify.message,
-    description: state.notify.description
-  }))
 
-  const notificationInfo = {
-    openNotify,
-    type,
-    msg,
-    description
-  }
-
-  const openNotificationWithIcon = (notificationInfo) => {
-    switch (notificationInfo.type) {
-      case ('success'): return message.success(notificationInfo.msg, 5)
-      case ('warning'): return message.warning(notificationInfo.msg, 5)
-      case ('error'): return message.error(notificationInfo.msg, 5)
-      default: return message.info(notificationInfo.msg, 5)
+  console.log('Notification의 state가 제대로 받아오니?', notificationInfo);
+  const openNotification = ({ openNotify, type, msg, description }) => {
+    console.log('openNotification함수 실행됨 ::::', notificationInfo);
+    switch (type) {
+      case ('success'):
+        console.log('success 들어옴');
+        message.success(msg, 5)
+        break
+      case ('warning'):
+        console.log('warning들어옴')
+        message.warning(msg, 5)
+        break
+      case ('error'):
+        console.log('error 들어옴');
+        message.error(msg, 5)
+        break
+      default:
+        console.log('case문에 안걸림');
+        message.info(msg, 5)
     }
   };
 
+  useEffect(() => {
+    if (notificationInfo.openNotify) {
+      console.log('Notification.js 의 uesEffect실행');
+      openNotification(notificationInfo)
+    }
+  }, [notificationInfo.openNotify])
+
   return (
-    <div>
-      {notificationInfo.openNotify &&
-        openNotificationWithIcon(notificationInfo)
-      }
+    <div id="notification-div">
+      {/* { notificationInfo.openNotify &&
+        openNotification(notificationInfo)
+      } */}
     </div>
   )
 }

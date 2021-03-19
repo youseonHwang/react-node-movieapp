@@ -23,8 +23,9 @@ function App() {
     //suspense 컴포넌트를 이용해서 로딩을 기다리기
     <Suspense fallback={(<div>Loading...</div>)}>
       <NavBar />
-      <Notification />
+      
       <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
+        <Notification />
         <Switch>
           <Route exact path="/" component={Auth(LandingPage, null)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
