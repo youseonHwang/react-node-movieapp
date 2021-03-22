@@ -23,6 +23,24 @@ router.post('/saveComment', (req, res) => {
   })
 })
 
+/* 댓글 삭제 */
+router.post('/deleteComment', (req, res) => {
+  console.log('deleteComment 도착');
+  console.log('deleteComment의 request.body는 ',req.body);
+  Comment.findOneAndDelete({ "_id": req.body._id })
+    .populate('writer')
+    .exec((err, result) => {
+      if (err) return res.status(400).send(err)
+
+      Comment.find({ "movieId": req.body.movieId })
+        .populate('writer')
+        .exec((err, result) => {
+          if (err) return res.status(400).send(err)
+          res.status(200).json({ success: true, result })
+        })
+    })
+})
+
 /* 전체 댓글 리턴 */
 router.post('/getComments', (req, res) => {
   console.log('getComments 도착');

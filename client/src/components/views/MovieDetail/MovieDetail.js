@@ -56,6 +56,12 @@ function MovieDetail(props) {
     setComments(Comments.concat(newComment)) // concat기존 배열에 원소 또는 배열을 추가하여 새 배열
   }
 
+  const handleRemove = (id) => {
+    setComments({
+      Comments: Comments.filter(comment => comment._id !== id)
+    })
+  }
+
   const toggleActorView = () => {
     setActorToggle(!ActorToggle)
   }

@@ -16,7 +16,6 @@ import promiseMiddleware from 'redux-promise'; //dispatch에게 promise함수 �
 import ReduxThunk from 'redux-thunk'; //dispatch에게 함수 형식을 대처하게끔
 
 //createStore(reducer, [preloadedState], [enhancer]) enhancer은 redux의 기능을 도와주는 미들웨어나 데브툴즈같은 것들
-
 // 여러개의 미들웨어를 적용 할 수 있습니다.
 // applyMiddleware를 활용하여 미들웨어를 거쳐가도록 하는 store 생성법
 // const store = createStore(reducer, applyMiddlewares(middleware1, middleware2));

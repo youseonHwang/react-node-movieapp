@@ -25,7 +25,7 @@ function ReplyComment(props) {
          */
           comment.responseTo == parentCommentId &&
           <div style={{ width: '80%', marginLeft: '40px' }}>
-            <SingleComment refreshFunction={props.refreshFunction} comment={comment} movieId={props.movieId} />
+            <SingleComment refreshFunction={props.refreshFunction} key={comment._id} comment={comment} movieId={props.movieId} />
             <ReplyComment refreshFunction={props.refreshFunction} movieId={props.movieId} CommentList={props.CommentList} parentCommentId={comment._id} />
           </div>
 

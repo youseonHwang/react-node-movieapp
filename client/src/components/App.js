@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Route, Switch } from "react-router-dom"; //리액트 라우터 (웹개발용)
 import Auth from "../hoc/auth";
+import { BackTop} from 'antd'
 
 
 // pages for this product
@@ -34,6 +35,7 @@ function App() {
           <Route exact path="/favorite" component={Auth(FavoritePage, true)} />
         </Switch>
       </div>
+      <BackTop />
       <Footer />
     </Suspense>
   );

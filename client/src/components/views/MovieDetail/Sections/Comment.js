@@ -41,7 +41,6 @@ function Comment(props) {
         if (response.data.success) {
           props.refreshFunction(response.data.result)
           console.log('saveComment성공::', response.data);
-          //const notificationInfo = 
           dispatch(openNotify({
             openNotify: true,
             type: 'success',
@@ -68,8 +67,8 @@ function Comment(props) {
       {props.CommentList && props.CommentList.map((comment, index) => (
         (!comment.responseTo && comment.writer &&
           <React.Fragment>
-            <SingleComment refreshFunction={props.refreshFunction} comment={comment} movieId={movieId} />
-            <ReplyComment refreshFunction={props.refreshFunction} CommentList={props.CommentList} parentCommentId={comment._id} movieId={movieId} />
+          <SingleComment refreshFunction={props.refreshFunction}  key={comment._id} comment={comment} movieId={movieId} />
+          <ReplyComment refreshFunction={props.refreshFunction} CommentList={props.CommentList} parentCommentId={comment._id} movieId={movieId} />
           </React.Fragment>
         )
       ))}
